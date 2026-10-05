@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Estimate LLM request costs and the effect of prompt caching with your own usage and prices.">
+  <title>LLM Cost Calculator · SaveMyToken</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/src/app.mjs"></script>
+</head>
+<body>
+  <header><a class="brand" href="https://savemytoken.com"><span class="mark">S</span> SaveMyToken</a><span class="tag">OPEN SOURCE TOOL</span></header>
+  <main>
+    <p class="eyebrow">MAKE THE COST VISIBLE</p>
+    <h1>Every token.<br>Every dollar.</h1>
+    <p class="intro">Estimate your LLM spend, then see what caching changes. Enter your own prices and usage to explore the tradeoffs.</p>
+    <div class="grid">
+      <form aria-labelledby="usage-heading">
+        <h2 id="usage-heading">Your usage &amp; prices</h2>
+        <p class="hint">All prices below are illustrative USD examples per 1M tokens.</p>
+        <div class="fields">
+          <label>Input tokens / request<input name="inputTokens" type="number" min="0" step="1" value="10000" required></label>
+          <label>Output tokens / request<input name="outputTokens" type="number" min="0" step="1" value="1000" required></label>
+          <label>Uncached input price ($)<input name="inputPrice" type="number" min="0" step="any" value="2" required></label>
+          <label>Output price ($)<input name="outputPrice" type="number" min="0" step="any" value="8" required></label>
+          <label>Cached input price ($)<input name="cachePrice" type="number" min="0" step="any" value="0.2" required></label>
+          <label>Requests / month<input name="requests" type="number" min="0" step="1" value="10000" required></label>
+        </div>
+        <label class="slider">Input cache hit rate <output id="hit-rate">50%</output><input name="hitRate" type="range" min="0" max="100" step="1" value="50"></label>
+        <button type="reset">Reset example values</button>
+      </form>
+      <section class="estimate" aria-label="Cost estimate" aria-live="polite" aria-atomic="true">
+        <p class="eyebrow">YOUR ESTIMATE</p>
+        <p id="error" role="alert" hidden></p>
+        <div id="result">
+          <h2>Cost per request</h2>
+          <p class="total" id="total">—</p>
+          <dl>
+            <div><dt>Input</dt><dd id="input">—</dd></div>
+            <div><dt>Output</dt><dd id="output">—</dd></div>
+            <div><dt>Without caching</dt><dd id="baseline">—</dd></div>
+            <div class="monthly"><dt>Monthly estimate</dt><dd id="monthly">—</dd></div>
+          </dl>
+          <p class="saving" id="saving"></p>
+        </div>
+        <p class="hint">A planning estimate. Actual bills may include cache writes, storage, tool calls, retries, tiered pricing, taxes, or other charges.</p>
+      </section>
+    </div>
+    <aside><h2>Understand the assumptions</h2><p>Requests are assumed to have the same token counts and cache hit rate. Cached input replaces the corresponding uncached input cost. Output costs are unchanged. This tool uses ordinary floating-point arithmetic and is not an invoice or a provider price feed.</p></aside>
+  </main>
+  <footer>Built by <a href="https://savemytoken.com">SaveMyToken</a>. Calculations stay in your browser.</footer>
+</body>
+</html>
