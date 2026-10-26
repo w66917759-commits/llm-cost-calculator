@@ -2,6 +2,8 @@
 
 Built by **[SaveMyToken](https://savemytoken.com)**.
 
+Related project: **[SI-API](https://siapi.ai)**.
+
 A local calculator for estimating language-model costs from your token counts, prices, request volume, and cache hit rates. Includes a browser interface and a reusable JavaScript function. No API keys, external services, or dependencies are needed.
 
 ## Run locally
